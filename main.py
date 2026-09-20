@@ -22,7 +22,7 @@ def home():
 
 
 @app.post("/shortner")
-def root(url_data: URLitems):
+def shortner(url_data: URLitems):
 
     next_id = get_next_sequence_value()
     short_id = encode_base62(next_id)

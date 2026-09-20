@@ -32,11 +32,11 @@ def get_url(short_id:str):
      conn = get_db_connection()
      cursor = conn.cursor()
 
-     query = "SELECT target_url FROM link_table WHERE short_id = %s;"
+     query = "UPDATE link_table SET clicks = clicks + 1 WHERE short_id = %s RETURNING target_url;"
      cursor.execute(query,(short_id,))
 
      row = cursor.fetchone()
-
+     conn.commit()
      cursor.close()
      conn.close()
 
