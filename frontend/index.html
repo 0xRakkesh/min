@@ -3,38 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shortener</title>
+  <title>min.url</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <main class="container">
+  <main class="wrapper">
     <header class="header">
       <h1 class="logo">min.url</h1>
-      <p class="subtitle">A clean, distraction-free link shortener</p>
+      <p class="subtitle">Shorten links and track clicks</p>
     </header>
 
-    <form id="shorten-form" class="form">
-      <div class="input-group">
-        <input 
-          type="url" 
-          id="target-url" 
-          placeholder="Paste a long URL (e.g. https://example.com)" 
-          required 
-          autocomplete="off"
-        />
-        <button type="submit" id="submit-btn">Shorten</button>
-      </div>
-    </form>
+    <!-- Shorten Section -->
+    <section class="section-card">
+      <form id="shorten-form">
+        <div class="input-group">
+          <input 
+            type="url" 
+            id="target-url" 
+            placeholder="Paste a long URL..." 
+            required 
+            autocomplete="off"
+          />
+          <button type="submit" id="submit-btn">Shorten</button>
+        </div>
+      </form>
 
-    <div id="error-box" class="error-box hidden"></div>
+      <div id="error-box" class="alert-box hidden"></div>
 
-    <div id="result-box" class="result-box hidden">
-      <div class="result-label">Your shortened link:</div>
-      <div class="result-content">
-        <a id="short-link" href="#" target="_blank" rel="noopener noreferrer"></a>
-        <button type="button" id="copy-btn">Copy</button>
+      <div id="result-box" class="result-box hidden">
+        <div class="result-content">
+          <a id="short-link" href="#" target="_blank" rel="noopener noreferrer"></a>
+          <button type="button" id="copy-btn">Copy</button>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section class="section-card">
+      <div class="section-heading">Check Analytics</div>
+      <form id="stats-form">
+        <div class="input-group">
+          <input 
+            type="text" 
+            id="stats-id" 
+            placeholder="Enter short ID (e.g. b or 15FTGj)" 
+            required 
+            autocomplete="off"
+          />
+          <button type="submit" id="stats-btn">Inspect</button>
+        </div>
+      </form>
+
+      <div id="stats-error-box" class="alert-box hidden"></div>
+
+      <div id="stats-result-box" class="stats-box hidden">
+        <div class="stats-row">
+          <span class="stats-label">Target:</span>
+          <a id="stats-target-url" class="stats-link" href="#" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="stats-row">
+          <span class="stats-label">Visits:</span>
+          <span id="stats-clicks-count" class="clicks-pill">0 clicks</span>
+        </div>
+      </div>
+    </section>
   </main>
 
   <script src="/static/app.js"></script>

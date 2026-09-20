@@ -44,3 +44,17 @@ def get_url(short_id:str):
           return row[0]
      return None
 
+def get_info(short_id:str):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM link_table WHERE short_id = %s;"
+    cursor.execute(query,(short_id,))
+    row = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if row:
+        return {"id": row[0], "target_url": row[1], "short_id": row[2], "clicks": row[3]}
+    return None

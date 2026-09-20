@@ -72,3 +72,49 @@ copyBtn.addEventListener("click", async () => {
     console.error("Failed to copy:", err);
   }
 });
+
+// Analytics / Inspect Link Logic
+const statsForm = document.getElementById("stats-form");
+const statsIdInput = document.getElementById("stats-id");
+const statsBtn = document.getElementById("stats-btn");
+const statsResultBox = document.getElementById("stats-result-box");
+const statsErrorBox = document.getElementById("stats-error-box");
+const statsTargetUrl = document.getElementById("stats-target-url");
+const statsClicksCount = document.getElementById("stats-clicks-count");
+
+statsForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  statsErrorBox.classList.add("hidden");
+  statsResultBox.classList.add("hidden");
+
+  let rawId = statsIdInput.value.trim();
+  if (!rawId) return;
+
+  // Clean input: extract ID if user pasted a full URL or path
+  const shortId = rawId.replace(/^https?:\/\/[^/]+\//, "").replace(/^\//, "");
+
+  statsBtn.disabled = true;
+  statsBtn.textContent = "Searching...";
+
+  try {
+    const response = await fetch(`/analytics/${encodeURIComponent(shortId)}`);
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.detail || "Link not found.");
+    }
+
+    const data = await response.json();
+    statsTargetUrl.href = data.target_url;
+    statsTargetUrl.textContent = data.target_url;
+    statsClicksCount.textContent = `${data.clicks ?? 0} ${data.clicks === 1 ? "click" : "clicks"}`;
+
+    statsResultBox.classList.remove("hidden");
+  } catch (err) {
+    statsErrorBox.textContent = err.message || "Could not retrieve stats.";
+    statsErrorBox.classList.remove("hidden");
+  } finally {
+    statsBtn.disabled = false;
+    statsBtn.textContent = "Inspect";
+  }
+});

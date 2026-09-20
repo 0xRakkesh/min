@@ -30,11 +30,16 @@ def shortner(url_data: URLitems):
     return {"short_url":f"{port}{short_id}"}
    
 
-@app.get("/{short_id}")
-
-def redirect_url(short_id: str):
-
-    target_url = get_url(short_id)
-    if target_url == None :
+@app.get("/analytics/{short_id}")
+def analytics(short_id: str):
+    stats = get_info(short_id)
+    if stats is None:
         raise HTTPException(status_code=404, detail="URL not found")
-    return RedirectResponse(url = target_url, status_code=307)
+    return stats
+
+@app.get("/{short_id}")
+def redirect_url(short_id: str):
+    target_url = get_url(short_id)
+    if target_url == None:
+        raise HTTPException(status_code=404, detail="URL not found")
+    return RedirectResponse(url=target_url, status_code=307)
