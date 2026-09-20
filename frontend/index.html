@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shortener</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1 class="logo">min.url</h1>
+      <p class="subtitle">A clean, distraction-free link shortener</p>
+    </header>
+
+    <form id="shorten-form" class="form">
+      <div class="input-group">
+        <input 
+          type="url" 
+          id="target-url" 
+          placeholder="Paste a long URL (e.g. https://example.com)" 
+          required 
+          autocomplete="off"
+        />
+        <button type="submit" id="submit-btn">Shorten</button>
+      </div>
+    </form>
+
+    <div id="error-box" class="error-box hidden"></div>
+
+    <div id="result-box" class="result-box hidden">
+      <div class="result-label">Your shortened link:</div>
+      <div class="result-content">
+        <a id="short-link" href="#" target="_blank" rel="noopener noreferrer"></a>
+        <button type="button" id="copy-btn">Copy</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
